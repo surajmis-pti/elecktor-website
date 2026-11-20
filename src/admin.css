@@ -23,6 +23,7 @@
 .adm aside{background:var(--ink);color:#c9d3e6;padding:22px 14px;position:sticky;top:0;height:100vh}
 .adm aside .brand{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:800;font-size:24px;color:#fff;letter-spacing:2px;padding:0 10px}
 .adm aside .brand small{display:block;font-size:11px;letter-spacing:3px;color:var(--volt)}
+.adm aside .brand small+small{letter-spacing:1px;color:#9fb0cf;font-weight:600;margin-top:2px}
 .adm aside nav{margin-top:26px;display:flex;flex-direction:column;gap:4px}
 .adm aside nav button{text-align:left;padding:10px 12px;border-radius:9px;font-weight:600;display:flex;justify-content:space-between}
 .adm aside nav button.on,.adm aside nav button:hover{background:rgba(255,255,255,.08);color:#fff}

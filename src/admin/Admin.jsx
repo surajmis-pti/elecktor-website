@@ -19,7 +19,10 @@ export default function Admin() {
   const [newCount, setNewCount] = useState(0);
 
   useEffect(() => {
-    document.title = "ELECKTOR Admin Console";
+    document.title = "elecktor.in – Admin Console";
+    let rm = document.querySelector('meta[name="robots"]');
+    if (!rm) { rm = document.createElement("meta"); rm.name = "robots"; document.head.appendChild(rm); }
+    rm.content = "noindex, nofollow";
     const m = document.createElement("meta"); m.name = "robots"; m.content = "noindex,nofollow"; document.head.appendChild(m);
     api("/admin/setup-status").then((r) => setNeedsSetup(r.needsSetup)).catch(() => setNeedsSetup(false));
     if (token.get()) api("/admin/me", { auth: true }).then(setMe).catch(() => token.set(""));
@@ -46,7 +49,7 @@ export default function Admin() {
     body = (
       <div className="app">
         <aside>
-          <div className="brand">ELECKTOR<small>ADMIN CONSOLE</small></div>
+          <div className="brand">elecktor.in<small>ADMIN CONSOLE</small><small>ELECKTOR INDUSTRIES</small></div>
           <nav>
             {VIEWS.map(([k, label]) => (
               <button key={k} className={view === k ? "on" : ""} onClick={() => setView(k)}>

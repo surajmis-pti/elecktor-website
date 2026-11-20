@@ -13,8 +13,8 @@ export function Login({ onDone }) {
   return (
     <div className="login">
       <form className="lbox" onSubmit={submit}>
-        <h1>ELECKTOR</h1>
-        <p className="muted" style={{ marginBottom: 18 }}>Admin Console – orders &amp; products</p>
+        <h1>elecktor.in</h1>
+        <p className="muted" style={{ marginBottom: 18 }}>ELECKTOR INDUSTRIES · Admin Console – orders &amp; products</p>
         <div className="f"><label>Email</label><input name="email" type="email" required autoComplete="username" defaultValue="admin@elecktor.in" /></div>
         <div className="f" style={{ marginTop: 10 }}><label>Password</label><input name="password" type="password" required autoComplete="current-password" /></div>
         <button className="btn b-dark" style={{ marginTop: 14, width: "100%", justifyContent: "center" }} disabled={busy}>{busy ? "Checking…" : "Login"}</button>
@@ -41,7 +41,7 @@ export function Setup({ onDone }) {
   return (
     <div className="login">
       <form className="lbox" onSubmit={submit}>
-        <h1>ELECKTOR</h1>
+        <h1>elecktor.in</h1>
         <p className="muted" style={{ marginBottom: 18 }}>First-time setup – create the admin account</p>
         <div className="f"><label>Setup key</label><input name="setupKey" required autoComplete="off" /></div>
         <div className="f" style={{ marginTop: 10 }}><label>Your name</label><input name="name" required defaultValue="Suraj" /></div>
