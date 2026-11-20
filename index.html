@@ -829,7 +829,7 @@ document.querySelector(".hero-bg").style.backgroundImage = `url(${window.ELK_IMG
 $$("img[data-img]").forEach(i => i.src = window.ELK_IMG[i.dataset.img]);
 $("#yr").textContent = new Date().getFullYear();
 $("#priceNote").textContent = "* " + C.priceNote;
-if (E.DEMO) $("#demoFlag").hidden = false;
+/* demo patti public site par nahi dikhani – sirf admin console mein dikhti hai */
 $("#burger").onclick = () => $("#menu").classList.toggle("open");
 $$("#menu a").forEach(a => a.addEventListener("click", () => $("#menu").classList.remove("open")));
 
