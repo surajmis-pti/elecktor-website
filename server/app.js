@@ -6,6 +6,7 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import crypto from "node:crypto";
 import { q, tx } from "./db.js";
 import { uploadImage, httpError } from "./storage.js";
 
@@ -47,7 +48,9 @@ async function productsWithVariants(where = "") {
 
 // ---------- auth ----------
 function secret() {
-  const s = process.env.JWT_SECRET || process.env.SUPABASE_JWT_SECRET;
+  // JWT_SECRET na ho to Supabase service key se ek alag secret bana lo (key khud kabhi token mein nahi jaati)
+  const sk = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const s = process.env.JWT_SECRET || process.env.SUPABASE_JWT_SECRET || (sk ? crypto.createHash("sha256").update("elk-admin-jwt:" + sk).digest("hex") : "");
   if (!s || s.length < 24) throw httpError(500, "JWT_SECRET is not configured");
   return s;
 }

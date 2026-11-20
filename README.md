@@ -5,10 +5,10 @@ Power cord manufacturer, Sonipat, Haryana — **https://elecktor.in**
 | Part | Tech | Kahan |
 |---|---|---|
 | Website + Admin Console | React (Vite) | `src/` |
-| Backend API | Node.js + Express | `server/app.js` (Vercel par `api/index.js` se chalta hai) |
+| Backend API | Node.js + Express | `server/app.js` (Netlify Function `netlify/functions/api.js` se chalta hai) |
 | Database | PostgreSQL (Supabase) | tables: `db/schema.sql` |
 | Product photos | Supabase Storage (bucket `products`) | `server/storage.js` |
-| Hosting | Vercel (free) | `vercel.json` |
+| Hosting | Netlify (free, commercial allowed) | `netlify.toml`, `netlify/functions/api.js` |
 
 ## Pages
 - `/` – public website: Products (length + quantity se order), Factory, Process, About, FAQ, Contact form, Track Order
@@ -20,20 +20,19 @@ Client order bhejta hai → Order ID milta hai (ELK-1001), status **New** → Ad
 ## Database tables
 `products`, `product_variants` (length + price), `orders`, `order_items`, `order_status_history`, `enquiries`, `admins`, `login_attempts`
 
-## Environment variables (Vercel → Project → Settings → Environment Variables)
-Supabase → Integrations → **Vercel** se project jodne par ye apne aap aa jaate hain:
-`POSTGRES_URL`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_JWT_SECRET`.
+## Environment variables (Netlify → Site configuration → Environment variables)
+| Name | Kya hai | Kaun daalega |
+|---|---|---|
+| `DATABASE_URL` | Supabase → **Connect** → *Transaction pooler* connection string (port 6543), `[YOUR-PASSWORD]` ki jagah DB password | Suraj |
+| `SUPABASE_URL` | `https://hnbqhaocvdrubxukrjvi.supabase.co` | – |
+| `SUPABASE_SERVICE_KEY` | Supabase → Project Settings → **API Keys** → `service_role` / secret key (sirf server par) | Suraj |
+| `SETUP_KEY` | pehla admin account banane ki key – apni marzi ka secret text | Suraj |
 
-Sirf ek variable khud banana hai:
-| Name | Kya hai |
-|---|---|
-| `SETUP_KEY` | pehla admin account banane ki key – apni marzi ka secret text (sirf ek baar kaam aata hai) |
-
-(Optional overrides: `DATABASE_URL`, `JWT_SECRET`, `SUPABASE_SERVICE_KEY`.)
+(Optional: `JWT_SECRET` – na ho to service key se apne aap ban jata hai.)
 
 ## Pehli baar setup
 1. Supabase → SQL Editor → `db/schema.sql` paste karke **Run**.
-2. Vercel par env variables daal kar deploy.
+2. Netlify par env variables daal kar deploy.
 3. `https://elecktor.in/admin` kholo → Setup key + apna password → admin account ban jayega.
 
 ## Local par chalana
