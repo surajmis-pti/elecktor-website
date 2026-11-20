@@ -8,11 +8,12 @@ pg.types.setTypeParser(20, (v) => (v === null ? null : Number(v))); // bigint id
 let pool;
 export function getPool() {
   if (!pool) {
-    const url = process.env.DATABASE_URL;
-    if (!url) throw new Error("DATABASE_URL is not set");
+    // DATABASE_URL (khud set kiya) ya POSTGRES_URL (Supabase–Vercel integration apne aap deta hai)
+    const url = process.env.DATABASE_URL || process.env.POSTGRES_URL;
+    if (!url) throw new Error("DATABASE_URL / POSTGRES_URL is not set");
     const local = /localhost|127\.0\.0\.1|host=\/|@\/|%2Ftmp/.test(url);
     pool = new pg.Pool({
-      connectionString: url,
+      connectionString: url.replace(/([?&])sslmode=[^&]*&?/, "$1").replace(/[?&]$/, ""),
       ssl: local ? false : { rejectUnauthorized: false },
       max: 3,                       // serverless: chhota pool
       idleTimeoutMillis: 10_000,

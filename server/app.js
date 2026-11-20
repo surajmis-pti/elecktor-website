@@ -47,7 +47,7 @@ async function productsWithVariants(where = "") {
 
 // ---------- auth ----------
 function secret() {
-  const s = process.env.JWT_SECRET;
+  const s = process.env.JWT_SECRET || process.env.SUPABASE_JWT_SECRET;
   if (!s || s.length < 24) throw httpError(500, "JWT_SECRET is not configured");
   return s;
 }

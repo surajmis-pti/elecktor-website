@@ -21,13 +21,15 @@ Client order bhejta hai → Order ID milta hai (ELK-1001), status **New** → Ad
 `products`, `product_variants` (length + price), `orders`, `order_items`, `order_status_history`, `enquiries`, `admins`, `login_attempts`
 
 ## Environment variables (Vercel → Project → Settings → Environment Variables)
+Supabase → Integrations → **Vercel** se project jodne par ye apne aap aa jaate hain:
+`POSTGRES_URL`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_JWT_SECRET`.
+
+Sirf ek variable khud banana hai:
 | Name | Kya hai |
 |---|---|
-| `DATABASE_URL` | Supabase → Connect → **Transaction pooler** connection string (port 6543) |
-| `JWT_SECRET` | lamba random text (admin login token sign karne ke liye) |
-| `SETUP_KEY` | pehla admin account banane ki key (sirf ek baar kaam aati hai) |
-| `SUPABASE_URL` | `https://<project>.supabase.co` |
-| `SUPABASE_SERVICE_KEY` | Supabase → Project Settings → API → `service_role` key (sirf server par) |
+| `SETUP_KEY` | pehla admin account banane ki key – apni marzi ka secret text (sirf ek baar kaam aata hai) |
+
+(Optional overrides: `DATABASE_URL`, `JWT_SECRET`, `SUPABASE_SERVICE_KEY`.)
 
 ## Pehli baar setup
 1. Supabase → SQL Editor → `db/schema.sql` paste karke **Run**.

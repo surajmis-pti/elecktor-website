@@ -9,7 +9,8 @@ export async function uploadImage(dataUrl, name = "product") {
   const buf = Buffer.from(m[3], "base64");
   if (buf.length > 3 * 1024 * 1024) throw httpError(400, "Image too large (max 3 MB)");
 
-  const url = process.env.SUPABASE_URL, key = process.env.SUPABASE_SERVICE_KEY;
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) {
     // local testing bina Supabase ke: photo seedha data URL ki tarah save
     return dataUrl;
