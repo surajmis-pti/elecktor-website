@@ -1,6 +1,7 @@
 /**
  * ELECKTOR INDUSTRIES – website backend (Google Apps Script + Google Sheet)
  * ----------------------------------------------------------------------
+ * Standalone script: setup() khud "ELECKTOR Website Data" Google Sheet banata hai (ID Script property SHEET_ID mein)
  * Sheet tabs (auto-create hote hain): Products, Orders, Enquiries
  * Script Properties (Project Settings > Script properties):
  *   ADMIN_PASSWORD  = admin console ka password (zaroori)
@@ -15,6 +16,7 @@ const PHOTO_FOLDER = "ELECKTOR Website Product Photos";
 
 /* ---------- one-time setup: run this once from the editor ---------- */
 function setup() {
+  Logger.log("Google Sheet: " + ss_().getUrl());
   sheet_("Products", PRODUCT_COLS); sheet_("Orders", ORDER_COLS); sheet_("Enquiries", ENQ_COLS);
   const sh = sheet_("Products", PRODUCT_COLS);
   if (sh.getLastRow() < 2) {
@@ -25,6 +27,7 @@ function setup() {
     ].forEach(r => sh.appendRow(r));
   }
   const props = PropertiesService.getScriptProperties();
+  if (!props.getProperty("NOTIFY_EMAIL")) props.setProperty("NOTIFY_EMAIL", Session.getEffectiveUser().getEmail());
   if (!props.getProperty("ADMIN_PASSWORD")) props.setProperty("ADMIN_PASSWORD", "CHANGE-ME-" + Math.floor(Math.random() * 1e6));
   Logger.log("Setup done. Admin password (Script properties > ADMIN_PASSWORD): " + props.getProperty("ADMIN_PASSWORD"));
 }
@@ -189,8 +192,18 @@ function orders_() {
   }));
 }
 
+function ss_() {
+  const props = PropertiesService.getScriptProperties();
+  let id = props.getProperty("SHEET_ID");
+  if (!id) {
+    const bound = SpreadsheetApp.getActive && SpreadsheetApp.getActive();
+    id = bound ? bound.getId() : SpreadsheetApp.create("ELECKTOR Website Data").getId();
+    props.setProperty("SHEET_ID", id);
+  }
+  return SpreadsheetApp.openById(id);
+}
 function sheet_(name, cols) {
-  const ss = SpreadsheetApp.getActive();
+  const ss = ss_();
   let sh = ss.getSheetByName(name);
   if (!sh) { sh = ss.insertSheet(name); sh.getRange(1, 1, 1, cols.length).setValues([cols]).setFontWeight("bold"); sh.setFrozenRows(1); }
   return sh;
